@@ -85,7 +85,7 @@ def freq_to_int(msg)
     end
   end
 
-  score += 10 * (msg.split(' ') & $keywords).length
+  score += 10 * (msg.split(' ') & $KEYWORDS).length
 #  score += 10 if $keywords.any? {|w| msg[w]}
 return score
 end
@@ -104,12 +104,12 @@ def freq_anal(msg)
 return h
 end
 
-decrypt_xor($input3)
+decrypt_xor($in3)
 
 
-puts "\n----------------------------------------------------------------------------------"
+puts "\n----------------------------------------------------------------------"
 puts ">> crypto challenge :: Set: 1 :: Challenge: 4 "
-puts "----------------------------------------------------------------------------------\n"
+puts "----------------------------------------------------------------------\n"
 
 $eval_hash = Hash.new
 
@@ -153,19 +153,20 @@ def find_xor_string
 =end
 end
 
-puts "no output because slow == false" if $slow == false
-find_xor_string() if $slow == true
+puts "not run! (set parameter $SLOW == true)" if $SLOW == false
+find_xor_string() if $SLOW == true
 
 
-puts "\n----------------------------------------------------------------------------------"
+puts "\n----------------------------------------------------------------------"
 puts ">> crypto challenge :: Set: 1 :: Challenge: 5 "
-puts "----------------------------------------------------------------------------------\n"
+puts "----------------------------------------------------------------------\n"
 
-$input5 = "Burning 'em, if you ain't quick and nimble\n" +
+$in5 = "Burning 'em, if you ain't quick and nimble\n" +
   "I go crazy when I hear a cymbal"
 
-$input51 = "0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a26226324272765272" +
-  "a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27282f"
+$in51 = "0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a262263242" +
+  "72765272a282b2f20430a652e2c652a3124333a653e2b2027630c692b2028316528632630" +
+  "2e27282f"
 
 def decrypt_xor_string(msg,key)
   aa = str_to_intArray(msg_to_hex(msg))
@@ -183,13 +184,34 @@ def decrypt_xor_string(msg,key)
 return xor
 end
 
-string = decrypt_xor_string($input5,"ICE")
-puts string
-puts "Identical: #{ string.eql? $input51}"
+string = decrypt_xor_string($in5,"ICE")
+puts "string: \n#{string}" 
+(string.eql? $in51)?(puts "Correct: TRUE".green):(puts "Correct: FALSE".red)
+
+# puts "Identical: #{ string.eql? $in51}"
 
 
-puts "\n----------------------------------------------------------------------------------"
+puts "\n----------------------------------------------------------------------"
 puts ">> crypto challenge :: Set: 1 :: Challenge: 6 "
-puts "----------------------------------------------------------------------------------\n"
+puts "----------------------------------------------------------------------\n"
 
+$in6a = "this is a test"
+$in6b = "wokka wokka!!!"
 
+puts "Hamming distance test: "
+puts str_to_binStr($in6a)
+puts str_to_binStr($in6b)
+
+sbin1 = str_to_binStr($in6a)
+sbin2 = str_to_binStr($in6b)
+
+iHammingDist = 0
+for i in 1..sbin1.length
+    if sbin1[i] != sbin2[i]
+      iHammingDist += 1
+    end
+end
+
+puts iHammingDist
+
+puts hammingDistance(sbin1,sbin2)

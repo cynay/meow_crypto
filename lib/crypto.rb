@@ -36,6 +36,9 @@ def str_to_base64(s)
 return [[s].pack('H*')].pack('m0')
 end
 
+def str_to_binStr(s)
+return s.unpack("B*").to_s
+end
 
 # HEX to ..
 # 1
@@ -191,4 +194,20 @@ def decrypt_xor_string(msg,key)
 return xor
 end
 
+# Special functions
 
+def hammingDist(s1,s2)
+  iHammingDist = 0
+  for i in 1..sbin1.length
+      if sbin1[i] != sbin2[i]
+        iHammingDist += 1
+      end
+  end
+  return iHammingDist
+end
+
+
+def hammingDistance(s1,s2)
+  raise "ERROT: Hamming: Non equal lengths" if s1.length != s2.length
+  (s1.chars.zip(s2.chars)).count {|l, r|l != r}
+end
