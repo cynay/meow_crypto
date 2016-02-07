@@ -195,23 +195,56 @@ puts "\n----------------------------------------------------------------------"
 puts ">> crypto challenge :: Set: 1 :: Challenge: 6 "
 puts "----------------------------------------------------------------------\n"
 
-$in6a = "this is a test"
-$in6b = "wokka wokka!!!"
+keymin = 2
+keymax = 40
 
-puts "Hamming distance test: "
-puts str_to_binStr($in6a)
-puts str_to_binStr($in6b)
 
-sbin1 = str_to_binStr($in6a)
-sbin2 = str_to_binStr($in6b)
-
-iHammingDist = 0
-for i in 1..sbin1.length
-    if sbin1[i] != sbin2[i]
-      iHammingDist += 1
-    end
+## Debug
+if $SLOW == true
+  $in6a = "this is a test"
+  $in6b = "wokka wokka!!!"
+  
+  puts "Hamming distance test: "
+  puts str_to_binStr($in6a)
+  puts str_to_binStr($in6b)
+  
+  sbin1 = str_to_binStr($in6a)
+  sbin2 = str_to_binStr($in6b)
+  
+  puts iHammingDist
+  puts hammingDistance(sbin1,sbin2)
 end
 
-puts iHammingDist
+file = File.open("./6.txt", "rb")
+content = file.read
 
-puts hammingDistance(sbin1,sbin2)
+# remove NewLines and write to new file
+sHex = str_to_hex(content.gsub(/\n/,""))
+File.open("./6_hex.txt", "w") { |file| file.write(sHex) }
+
+hammingHash = Hash.new
+
+for i in keymin..keymax
+  iHam1 = hammingDistance(str_to_binStr(sHex[0,i]),str_to_binStr(sHex[i,i]))
+  iHam2 = hammingDistance(str_to_binStr(sHex[i,i]),str_to_binStr(sHex[2*i,i]))
+  iHam3 = hammingDistance(str_to_binStr(sHex[2*i,i]),str_to_binStr(sHex[3*i,i]))
+  iHam4 = hammingDistance(str_to_binStr(sHex[3*i,i]),str_to_binStr(sHex[4*i,i]))
+  hammingHash[i] = (iHam1 + iHam2 + iHam3 + iHam4) / (4*i)
+  
+end
+puts hammingHash
+
+keys = hammingHash.select {|k,v| v == hammingHash.values.max }.keys
+puts "----"
+puts keys
+
+
+
+
+
+
+
+
+
+
+

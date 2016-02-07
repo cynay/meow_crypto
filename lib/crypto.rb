@@ -40,6 +40,13 @@ def str_to_binStr(s)
 return s.unpack("B*").to_s
 end
 
+# BASE64 to ..
+#
+
+def str_to_hex(s)
+return s.unpack('m0').first.unpack('H*').first
+end
+
 # HEX to ..
 # 1
 def hex_to_bin(hex)
