@@ -2,6 +2,7 @@
 # Crypto Challenge:  http://cryptopals.com/
 
 # Globals
+$ALPHA_LOWER = ("abcdefghijklmonpqrstuvwxyz").split("")
 $BASE64 = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" +
   "+/").scan(/./)
 $KEYWORDS = ['the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'I', 
@@ -15,7 +16,7 @@ $KEYWORDS = ['the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'I',
   'back', 'after', 'use', 'two', 'how', 'our', 'work', 'first', 'well', 'way', 
   'even', 'new', 'want', 'because', 'any', 'these', 'give', 'day', 'most', 
   'us']
-
+$HGRAM = Hash.new
 
 # Simple convertions
 #
@@ -71,6 +72,18 @@ end
 def bin_to_base64(bin)
 return bin.scan(/....../).map { |x| $BASE64[x.to_i(2)] }.join
 end  
+
+
+# Histogram methods
+#
+#
+def new_histogram()
+for i in 0..25 
+  $HGRAM[$ALPHA_LOWER[i]] = 0
+end
+return $HGRAM
+end
+
 
 
 # XOR methods

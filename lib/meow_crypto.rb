@@ -238,7 +238,7 @@ keys = hammingHash.select {|k,v| v == hammingHash.values.max }.keys
 puts "----"
 puts keys
 
-
+puts new_histogram
 
 
 
